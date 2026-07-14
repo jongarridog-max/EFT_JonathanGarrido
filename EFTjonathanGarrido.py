@@ -136,7 +136,7 @@ def eiminar_prenda(categoria,prenda_dict,bodega_dict):
             if tallas [contador].upper()== categoria_up:
                 key_real = tallas [contador]
             contador = contador +1
-        if key_real !"":
+        if key_real !="":
             prenda_dict.pop(key_real)
             bodega_dict.pop(key_real)
             return True
@@ -149,7 +149,6 @@ prendas = {
     'S004': ['Vestido Sol', 'vestido', 'S', 'rojo', 'lino', False],
     'S005': ['Poleron Cozy', 'poleron', 'XL', 'verde', 'algodon', True],
     'S006': ['Camisa Formal', 'camisa', 'M', 'blanco', 'algodon', False],
-    ...
 }
 
 bodega = {
@@ -159,16 +158,80 @@ bodega = {
     'S004': [24990, 6],
     'S005': [17990, 8],
     'S006': [14990, 2],
-    ...
-}
+}    
+
+opcion = 0
+
+
+while opcion !=6:
+    mostra_menu()
+    opcion = leer_opcion()
+    if opcion == 1:
+        agregar_prenda=input("Ingrese tipo de prensa:")
+        unidades_categoria(agregar_prenda,buscar_categoria,bodega)
+
+    elif opcion ==2:
+        entrada_min= input("Ingrese precio minimo:")
+        entrada_max=input("Ingrese precio maximo:")
+        try:
+            p_min=int(entrada_min)
+            p_max=int(entrada_max)
+            if p_min >= 0 and p_max >=0 and p_min <= p_max:
+                busqueda_precio(p_min,p_max,buscar_categoria,bodega)
+            else:
+                print("debe ingresar valores enteros")
+        except ValueError:
+            print("debe ingresar valores enteros")
+
+    elif opcion == 3:  
+        buble_actualizar="s"
+        while buble_actualizar == "s":
+            cat_ingresada=input("Ingrese el codigo de la prenda:")
+            precio_ingresado=input("ingrese el nuevo precio")
+            if validar_entero_mayor_cero(precio_ingresado)== True:
+                exito=actualizar_precio_prenda(cat_ingresada,precio_ingresado,categoria,bodega)
+                if exito ==True:
+                    print("Precio Actualizado")
+                else:
+                    print("codigo no existe")
+            else:
+                print("precio debe ser mayor a cero")
+                bucle_sn=""
+                while bucle_sn != "s" and bucle_sn!= "n":
+                    bucle_sn=input("debe actualizar otro precio (s/n)").lower()
+                buble_actualizar=bucle_sn
+    elif opcion == 4:
+        print("---ingrese los datos de la nueva prenda-----:")
+        cat=input("categoria:").strip()
+        non=input("prenda:").strip()
+        tal=input("talla:").strip()
+        pre=input("precio").strip()
+        if validar_texto(cat) == False or buscar_categoria(cat,categoria)== True:
+            datos_correctos= False
+        if validar_texto(non)== False:
+            datos_correctos= False
+        if validar_texto (tal)== False:
+            datos_correctos=False
+        if validar_entero_mayor_cero(tal)== False:
+            datos_correctos=False
+        if validar_entero_mayor_cero(pre)== False:
+            datos_correctos= False
+            agregar_prenda(cat,non,tal,pre,categoria,bodega)
+            print("prenda agregada")
+        else:
+            if buscar_categoria(cat,categoria)== true:
+                print("el codigo ya existe")
+    elif opcion == 5:
+        prenda_eliminada=input("ingrese la prenda a eliminar:")
+        eliminado= prenda_eliminada(cat,eliminado,categoria,bodega)
+        if eliminado == true:
+            print("prenda eliminada")
+        else:
+            print("el codigo ya existe")
+    elif opcion == 6:
+        print("programa finalizado")                                     
 
 
 
 
-
-
-
-
-
-        
 
